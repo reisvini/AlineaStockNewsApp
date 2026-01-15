@@ -1,0 +1,245 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Stock News API",
+        "version": "1.0.0",
+        "description": "A simple API to fetch stock news articles with pagination and caching."
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Development server"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "ApiErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "enum": [
+                            false
+                        ],
+                        "description": "Always false for errors"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Error message"
+                    },
+                    "error": {
+                        "type": "object",
+                        "properties": {
+                            "code": {
+                                "type": "string",
+                                "enum": [
+                                    "ERR_3006",
+                                    "ERR_4001",
+                                    "ERR_4002",
+                                    "ERR_4003",
+                                    "ERR_5001",
+                                    "ERR_5002",
+                                    "ERR_5003"
+                                ],
+                                "description": "Error code"
+                            },
+                            "details": {
+                                "nullable": true,
+                                "description": "Additional error details"
+                            }
+                        },
+                        "required": [
+                            "code"
+                        ]
+                    },
+                    "stack": {
+                        "type": "string",
+                        "description": "Stack trace (only in development)"
+                    }
+                },
+                "required": [
+                    "success",
+                    "message",
+                    "error"
+                ]
+            },
+            "Article": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The article ID"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The article title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A brief summary of the article"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "Link to the full article"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Source of the article"
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Publication date",
+                        "example": "2023-01-01T00:00:00Z"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "Author name"
+                    },
+                    "imageUrl": {
+                        "type": "string",
+                        "description": "URL of the article image"
+                    }
+                },
+                "required": [
+                    "id",
+                    "title",
+                    "description",
+                    "url",
+                    "source",
+                    "publishedAt"
+                ]
+            },
+            "PaginatedResponse": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Article"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "description": "Total number of items"
+                    },
+                    "page": {
+                        "type": "integer",
+                        "description": "Current page number"
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Items per page"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "description": "Total number of pages"
+                    }
+                },
+                "required": [
+                    "items",
+                    "total",
+                    "page",
+                    "limit",
+                    "totalPages"
+                ]
+            },
+            "ArticlesApiResponse": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "enum": [
+                            true
+                        ],
+                        "description": "Always true for success"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Success message"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedResponse"
+                    }
+                },
+                "required": [
+                    "success",
+                    "message",
+                    "data"
+                ]
+            }
+        },
+        "parameters": {}
+    },
+    "paths": {
+        "/articles": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get a list of stock news articles",
+                "description": "Retrieve stock news articles with pagination and search capabilities.",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false,
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "schema": {
+                            "type": "string",
+                            "description": "Search term"
+                        },
+                        "required": false,
+                        "description": "Search term",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ArticlesApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
