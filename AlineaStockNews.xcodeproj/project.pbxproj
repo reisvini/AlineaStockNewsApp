@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FAA42D0E2F16962400DF5831 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = AA324A112F11491D002C0EE7 /* OpenAPIRuntime */; };
+		FAA42D0F2F16962400DF5831 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = AA324A122F11491D002C0EE7 /* OpenAPIURLSession */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FA324A012F11491C002C0EE7 /* AlineaStockNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlineaStockNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA42D0F2F16962400DF5831 /* OpenAPIURLSession in Frameworks */,
+				FAA42D0E2F16962400DF5831 /* OpenAPIRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = AlineaStockNews;
 			packageProductDependencies = (
+				AA324A112F11491D002C0EE7 /* OpenAPIRuntime */,
+				AA324A122F11491D002C0EE7 /* OpenAPIURLSession */,
 			);
 			productName = AlineaStockNews;
 			productReference = FA324A012F11491C002C0EE7 /* AlineaStockNews.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = FA3249F82F11491C002C0EE7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AA324A202F11491D002C0EE7 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
+				AA324A212F11491D002C0EE7 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FA324A022F11491C002C0EE7 /* Products */;
 			projectDirPath = "";
@@ -332,6 +345,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA324A202F11491D002C0EE7 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-generator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		AA324A212F11491D002C0EE7 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA324A112F11491D002C0EE7 /* OpenAPIRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA324A202F11491D002C0EE7 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */;
+			productName = OpenAPIRuntime;
+		};
+		AA324A122F11491D002C0EE7 /* OpenAPIURLSession */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA324A212F11491D002C0EE7 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
+			productName = OpenAPIURLSession;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FA3249F92F11491C002C0EE7 /* Project object */;
 }
