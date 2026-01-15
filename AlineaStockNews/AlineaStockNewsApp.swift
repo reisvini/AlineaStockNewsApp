@@ -10,23 +10,19 @@ import SwiftData
 
 @main
 struct AlineaStockNewsApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    private let apiClient: APIClient
+    private let repository: ArticlesRepository
+    private let viewModel: ArticlesViewModel
+    
+    init() {
+        self.apiClient = APIClient()
+        self.repository = ArticlesRepository(apiClient: apiClient)
+        self.viewModel = ArticlesViewModel(repository: repository)
+    }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: viewModel)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
