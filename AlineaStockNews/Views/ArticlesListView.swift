@@ -30,6 +30,13 @@ struct ArticlesListView: View {
             .onSubmit(of: .search) {
                 Task { await viewModel.search() }
             }
+            .onChange(of: viewModel.searchText) { oldValue, newValue in
+                let trimmed = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+
+                if trimmed.isEmpty && !oldValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Task { await viewModel.refresh() }
+                }
+            }
             .task {
                 await viewModel.loadInitial()
             }
